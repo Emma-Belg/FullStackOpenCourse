@@ -6,7 +6,7 @@ This Diagram has been made using [Mermaid](https://github.blog/2022-02-14-includ
 
 
  ```mermaid
-sequenceDiagram
+    sequenceDiagram
     participant browser
     participant server
 
