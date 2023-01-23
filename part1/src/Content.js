@@ -2,12 +2,12 @@ import React from 'react';
 
 const Content = (props) => {
   
-  const content = props.content;
+  const course = props.course;
 
   return (
     <div>
-      {content.map((content) =>
-      <p>{content.part}: {content.exercises}</p>
+      {course.map((course) =>
+      <p>{course.part}: {course.exercises}</p>
       )}
     </div>
   )

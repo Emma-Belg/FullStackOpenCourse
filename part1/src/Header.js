@@ -1,8 +1,8 @@
 const Header = (props) => { 
-    const content = props.content;
+    const course = props.course;
     
     return (
-        <h1>{content[0].course}</h1> 
+        <h1>{course.name}</h1> 
     )
   }
   

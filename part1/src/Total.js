@@ -1,10 +1,12 @@
 const Total = (props) => {
     
-  const content = props.content;
+  const course = props.course;
+  const courseParts = course.parts;
+  console.log("Hey", courseParts);
 
   let sum = 0;
-  for (let i=0; i < content.length; i++) {
-    let a = content[i].exercises;
+  for (let i=0; i < courseParts.length; i++) {
+    let a = courseParts[i].exercises;
     sum = sum + a;
   }
 
