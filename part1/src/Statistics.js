@@ -11,7 +11,7 @@ const Statistics = (props) => {
         let neutral = array[1] * 0;
         let negative = array[2] * -1;
         let all = (positive + neutral + negative) / total([array]);
-        return rounding(all, 1000);
+        return rounding(all, 100);
     }
 
     const positiveAv = ([array]) => {
@@ -20,11 +20,11 @@ const Statistics = (props) => {
     }
 
     return (
-        <div>
+        <tbody>
             <StatisticsLine text="Total votes:" stat={total([voteOptions])} />
             <StatisticsLine text="Average Score:" stat={average([voteOptions])} />
-            <StatisticsLine text="Percentage of positive votes:" stat={positiveAv([voteOptions])} />
-        </div>
+            <StatisticsLine text="Positive votes:" stat={positiveAv([voteOptions])} />
+        </tbody>
     )
 }
 

@@ -5,7 +5,7 @@ import Button from './Button';
 import Statistics from './Statistics';
 import StatisticsLine from './StatisticsLine';
 
-//Part 1.10
+//Part 1.11
 const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
@@ -31,10 +31,15 @@ const App = () => {
           </div>
           :
           <div>
-            <StatisticsLine text="Good:" stat={good} />
-            <StatisticsLine text="Neutral:" stat={neutral} />
-            <StatisticsLine text="Bad:" stat={bad} />
-            <Statistics voteOptions={voteOptions} />
+            <table>
+              <tbody>
+                <StatisticsLine text="Good:" stat={good} />
+                <StatisticsLine text="Neutral:" stat={neutral} />
+                <StatisticsLine text="Bad:" stat={bad} />
+              </tbody>
+              <Statistics voteOptions={voteOptions} />
+            </table>
+
           </div>
       }
     </div>
