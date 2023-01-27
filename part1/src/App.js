@@ -1,47 +1,41 @@
 import { useState } from 'react'
 
-import Header from './Header'
+import Header from './Header';
 import Button from './Button';
-import Statistics from './Statistics';
-import StatisticsLine from './StatisticsLine';
+import UniCafe from './UniCafe';
+import Anecdotes from './Anecdotes';
 
-//Part 1.11
+//Part 1.12
 const App = () => {
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
-  const voteOptions = [good, neutral, bad];
-  
+  const [selection, setSelection] = useState("")
   //Handle Clicks
-  const handleGoodClick = () => { setGood(good + 1) }
-  const handleNeutralClick = () => { setNeutral(neutral + 1) }
-  const handleBadClick = () => { setBad(bad + 1) }
+  const handleUniCafeClick = () => { setSelection("UniCafe") }
+  const handleAnecdotesClick = () => { setSelection("Anecdotes") }
 
   return (
     <div>
-      <Header text="Give Feedback" />
-      <Button handleClick={handleGoodClick} text='Good' />
-      <Button handleClick={handleNeutralClick} text='Neutral' />
-      <Button handleClick={handleBadClick} text='Bad' />
-      <Header text="Statistics" />
-      {
-        voteOptions[0] === 0 && voteOptions[1] === 0 && voteOptions[2] === 0 ?
-          <div>
-            <p>No feedback given.</p>
-          </div>
-          :
-          <div>
-            <table>
-              <tbody>
-                <StatisticsLine text="Good:" stat={good} />
-                <StatisticsLine text="Neutral:" stat={neutral} />
-                <StatisticsLine text="Bad:" stat={bad} />
-              </tbody>
-              <Statistics voteOptions={voteOptions} />
-            </table>
+      <Header text="Choose App" />
+      <p>Which app would you like see?</p>
+      <Button handleClick={handleUniCafeClick} text='Uni Cafe' />
+      <Button handleClick={handleAnecdotesClick} text='Anecdotes' />
 
-          </div>
-      }
+      {
+          selection ===  "UniCafe" ?
+            <div>
+              <UniCafe />
+            </div>
+            :
+            selection ===  "Anecdotes" ?
+            <div>
+              <Anecdotes />
+  
+            </div>
+            :
+            <div>
+              <p>Click on a button to make a selection</p>
+  
+            </div>
+        }
     </div>
   )
 }
