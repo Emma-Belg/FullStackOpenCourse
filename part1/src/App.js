@@ -11,7 +11,7 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
   const voteOptions = [good, neutral, bad];
-
+  
   //Handle Clicks
   const handleGoodClick = () => { setGood(good + 1) }
   const handleNeutralClick = () => { setNeutral(neutral + 1) }
@@ -25,7 +25,7 @@ const App = () => {
       <Button handleClick={handleBadClick} text='Bad' />
       <Header text="Statistics" />
       {
-        voteOptions[0] === 0 ?
+        voteOptions[0] === 0 && voteOptions[1] === 0 && voteOptions[2] === 0 ?
           <div>
             <p>No feedback given.</p>
           </div>
