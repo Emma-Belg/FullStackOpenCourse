@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import Header from './Header';
 
+import Header from './Header';
 import Button from './Button'
 
 const Anecdotes = () => {
@@ -15,16 +15,32 @@ const Anecdotes = () => {
         'The only way to go fast, is to go well.'
     ]
 
-    const [anecdote, setAnecdote] = useState(0)
-
-    const handleAnecdoteClick = () => { setAnecdote(Math.floor(Math.random() * anecdotes.length)) }
-
+    const randomInt = Math.floor(Math.random() * anecdotes.length);
+    const [anecdote, setAnecdote] = useState(randomInt);
+    const [votes, setVote] = useState(new Uint8Array(8));
+    const [rand, setRand] = useState(0);
+    console.log("first", randomInt)
+    
+    const handleAnecdoteClick = () => { 
+        setAnecdote(randomInt) 
+        setRand(randomInt);
+        console.log("Handle", randomInt)
+    }
+    const handleVoteClick = () => { 
+        votes[rand] += 1;
+        const votesCopy = [...votes];
+        setVote(votesCopy)
+        console.log("Rand", rand)
+    }
+    
     return (
         <div>
             <Header text="Anecdotes" />
             <Button handleClick={handleAnecdoteClick} text='Get anecdote' />
             <br />
             <p>{anecdotes[anecdote]}</p>
+            <Button handleClick={handleVoteClick} text='Vote' />
+            <p>Votes: {votes[rand]}</p>
             <br />
             
         </div>
