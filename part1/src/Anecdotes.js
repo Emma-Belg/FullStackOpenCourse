@@ -15,32 +15,51 @@ const Anecdotes = () => {
         'The only way to go fast, is to go well.'
     ]
 
-    const randomInt = Math.floor(Math.random() * anecdotes.length);
-    const [anecdote, setAnecdote] = useState(randomInt);
+    let randomInt = Math.floor(Math.random() * anecdotes.length);
     const [votes, setVote] = useState(new Uint8Array(8));
-    const [rand, setRand] = useState(0);
-    console.log("first", randomInt)
-    
+    //initiate rand State with randomInt, otherwise votes are not given to correct anecdote
+    const [rand, setRand] = useState(randomInt);
+    //ensure that the anecdote matches rand, not a different randomInt
+    const [anecdote, setAnecdote] = useState(rand);
+
     const handleAnecdoteClick = () => { 
         setAnecdote(randomInt) 
+        //update rand State to === (this iteration of) randomInt. 
+        //This way the vote(handleVoteClick below) is given to correct anecdote, not a new random one.
         setRand(randomInt);
-        console.log("Handle", randomInt)
+        //randomising randomInt again in order to stop unchanging/stuck loop if randomInt & rand happen to be the same on one iteration
+        randomInt = Math.floor(Math.random() * anecdotes.length);
     }
+
     const handleVoteClick = () => { 
         votes[rand] += 1;
         const votesCopy = [...votes];
         setVote(votesCopy)
-        console.log("Rand", rand)
+    }
+
+    const getMax = (a, b) => Math.max(a, b);
+    const getHighest = votes.reduce(getMax);
+
+    let high = "No votes yet made"
+    for(let i =0; i < votes.length; i++) {
+        if(votes[i] === getHighest) {
+            high = anecdotes[i] 
+        }
+        if( getHighest === 0) {
+            high = "No votes yet made"
+        }
     }
     
     return (
         <div>
-            <Header text="Anecdotes" />
+            <Header text="Anecdote of the day" />
             <Button handleClick={handleAnecdoteClick} text='Get anecdote' />
             <br />
             <p>{anecdotes[anecdote]}</p>
             <Button handleClick={handleVoteClick} text='Vote' />
             <p>Votes: {votes[rand]}</p>
+            <Header text="Anecdote with most votes" />
+            <p>Highest Vote: {high}</p>
             <br />
             
         </div>
