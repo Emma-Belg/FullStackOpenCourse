@@ -1,14 +1,15 @@
-const Content = (props) => {
+import Total from "./Total";
 
+const Content = (props) => {
     const course = props.course;
-    const courseParts = course.map((part) => part);
-    const courseItems = courseParts.map((course) =>
+    const courseItems = course.map((course) =>
         <p key={course.id}>{course.name}: {course.exercises} </p>
     )
 
     return (
         <div>
             {courseItems}
+            <Total course={course}/>
         </div>
     )
 }

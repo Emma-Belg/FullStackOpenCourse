@@ -1,6 +1,5 @@
 import Header from './Header'
 import Content from './Content'
-import Total from './Total'
 
 import Note from './components/Note'
 import Course from './components/Course'
