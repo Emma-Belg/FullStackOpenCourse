@@ -1,9 +1,6 @@
 import Content from "../Content";
-import Note from "./Note";
 
-const Course = (props) => {
-    const { courses } = props
-
+const Course = ({ courses }) => {
     return (
         <div>
             <Content courses={courses} />
