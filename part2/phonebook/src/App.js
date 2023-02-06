@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import DisplayPeople from './components/DisplayPeople'
+import PersonForm from './components/PersonForm'
+import Search from './components/Search'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -24,8 +27,9 @@ const App = () => {
     event.preventDefault()
     persons.map((person) => {
       if (newName === person.name) {
-        setPersons(persons);
-        alert(`"${newName}" has already been added to the phonebook`)
+        const existingPersons = [...persons]
+        alert(`"${newName}" has already been added to the phonebook`);
+        setPersons(existingPersons);
       }
       else {
         const personObject = {
@@ -37,71 +41,46 @@ const App = () => {
     })
   }
 
-  // const findMatch = (searchArray, searchString) => searchArray.filter(element => {
-  //   if (element.toLowerCase().includes(searchString.toLowerCase()))
-  //     return true;
-  // })
-
   function findByMatchingProperties(objectToSearch, keyValueToMatch) {
     return objectToSearch.filter(function (objectEntry) {
-        return Object.keys(keyValueToMatch).every(function (key) {
-          if (objectEntry[key].toLowerCase().includes(keyValueToMatch[key].toLowerCase()))
+      return Object.keys(keyValueToMatch).every(function (key) {
+        if (objectEntry[key].toLowerCase().includes(keyValueToMatch[key].toLowerCase()))
           return true;
-        });
+      });
     });
-}
+  }
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
-    console.log(event.target.value)
   }
   const handleNumberChange = (event) => {
     setNewNumber(event.target.value)
   }
-  const handSearchChange = (event) => {
+  const handleSearchChange = (event) => {
     setSearch(event.target.value)
-    setShowFiltered(findByMatchingProperties(persons, { name: event.target.value}))
+    setShowFiltered(findByMatchingProperties(persons, { name: event.target.value }))
   }
 
   return (
     <div>
       <h1>Phonebook</h1>
-      <div>
-        Filter shown with: <input
-          value={newSearch}
-          onChange={handSearchChange} />
-      </div>
+      <Search
+        newSearch={newSearch}
+        handleSearchChange={handleSearchChange}
+      />
+
       <h2>Add New</h2>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input
-            value={newName}
-            onChange={handleNameChange} />
-        </div>
-        <div>number: <input
-          value={newNumber}
-          onChange={handleNumberChange} /></div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <PersonForm
+        addPerson={addPerson}
+        newName={newName}
+        handleNameChange={handleNameChange}
+        newNumber={newNumber}
+        handleNumberChange={handleNumberChange}
+      />
       <h2>Numbers</h2>
-      <div>
-        {
-          newSearch === '' ?
-            <ul>
-              {persons.map((person) => {
-                return (<li key={person.name}>{person.name}: {person.number}</li>)
-              })}
-            </ul>
-            :
-            <ul>
-              {showFiltered.map((person) => {
-                return (<li key={person.name}>{person.name}: {person.number}</li>)
-              })}
-            </ul>
-        }
-      </div>
+      <DisplayPeople
+        newSearch={newSearch} people={persons} showFiltered={showFiltered}
+      />
     </div>
   )
 }
