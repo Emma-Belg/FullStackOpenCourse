@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import axios from 'axios'
+import { useState, useEffect } from 'react'
 import DisplayPeople from './components/DisplayPeople'
 import PersonForm from './components/PersonForm'
 import Search from './components/Search'
@@ -23,20 +24,29 @@ const App = () => {
   const [newSearch, setSearch] = useState('')
   const [showFiltered, setShowFiltered] = useState('')
 
+  useEffect(() => {
+    console.log('effect')
+    axios
+    .get('http://localhost:3001/persons')
+    .then(response => {
+      console.log(response.data);
+      setPersons(response.data)
+    })
+  })
   const addPerson = (event) => {
     event.preventDefault()
     persons.map((person) => {
       if (newName === person.name) {
         const existingPersons = [...persons]
         alert(`"${newName}" has already been added to the phonebook`);
-        setPersons(existingPersons);
+        return setPersons(existingPersons);
       }
       else {
         const personObject = {
           name: newName,
           number: newNumber
         }
-        setPersons(persons.concat(personObject));
+        return setPersons(persons.concat(personObject));
       }
     })
   }
