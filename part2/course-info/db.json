@@ -24,6 +24,11 @@
       "content": "use console.log",
       "important": true,
       "id": 5
+    },
+    {
+      "content": "log",
+      "important": false,
+      "id": 6
     }
   ]
 }

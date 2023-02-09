@@ -62,12 +62,6 @@ const App = () => {
         console.log("App response", initialNotes)
         return setNotes(initialNotes)
       })
-    // axios
-    //   .get('http://localhost:3001/notes')
-    //   .then(response => {
-    //     console.log('promise fulfilled', response.data)
-    //     setNotes(response.data)
-    //   })
   }, [])
 
 
@@ -86,17 +80,9 @@ const App = () => {
         setNotes(notes.concat(returnedNote))
         setNewNote('')
       })
-    // axios
-    //   .post('http://localhost:3001/notes', noteObject)
-    //   .then(response => {
-    //     console.log(response)
-    //     setNotes(notes.concat(response.data))
-    //     setNewNote('')
-    //   })
   }
 
   const handleNoteChange = (event) => {
-    console.log(event.target.value)
     setNewNote(event.target.value)
   }
 
@@ -114,9 +100,12 @@ const App = () => {
       .then(returnedNote => {
         setNotes(notes.map(note => note.id !== id ? note : returnedNote))
       })
-    // axios.put(url, changedNote).then(response => {
-    //   setNotes(notes.map(note => note.id !== id? note : response.data))
-    // })
+      .catch(error => {
+        alert(
+          `the note ${note.content} was already deleted from server`
+        )
+        setNotes(notes.filter(n => n.id !== id))
+      })
   }
 
   return (
