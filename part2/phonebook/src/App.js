@@ -1,54 +1,46 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
+
 import DisplayPeople from './components/DisplayPeople'
 import PersonForm from './components/PersonForm'
 import Search from './components/Search'
+import people from './services/people'
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    {
-      name: 'Arto Hellas',
-      number: 990
-    },
-    {
-      name: 'Amy Lala',
-      number: 889
-    },
-    {
-      name: 'Rand tom',
-      number: 889
-    }
-  ])
+  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newSearch, setSearch] = useState('')
   const [showFiltered, setShowFiltered] = useState('')
 
   useEffect(() => {
-    console.log('effect')
-    axios
-    .get('http://localhost:3001/persons')
-    .then(response => {
-      console.log(response.data);
-      setPersons(response.data)
-    })
-  })
+    people
+      .getAll()
+      .then(initialPeople => {
+        return setPersons(initialPeople)
+      })
+  }, [])
+
   const addPerson = (event) => {
     event.preventDefault()
-    persons.map((person) => {
-      if (newName === person.name) {
-        const existingPersons = [...persons]
-        alert(`"${newName}" has already been added to the phonebook`);
-        return setPersons(existingPersons);
-      }
-      else {
-        const personObject = {
-          name: newName,
-          number: newNumber
-        }
-        return setPersons(persons.concat(personObject));
-      }
+    const namesArray = []
+    persons.map(person => {
+      namesArray.push(person.name)
     })
+    if (namesArray.includes(`${newName}`)) {
+      alert(`"${newName}" has already been added to the phonebook`);
+    }
+    else {
+      const personObject = {
+        name: newName,
+        number: newNumber
+      }
+      people
+        .create(personObject)
+        .then(response => {
+          setPersons(persons.concat(response))
+        })
+    }
   }
 
   function findByMatchingProperties(objectToSearch, keyValueToMatch) {
