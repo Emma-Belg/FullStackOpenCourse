@@ -43,6 +43,15 @@ const App = () => {
     }
   }
 
+  const deletePpl = (id) => {
+    people
+      .deletePerson(id)
+
+    people
+      .getAll()
+      .then(response => setPersons(response))
+  }
+
   function findByMatchingProperties(objectToSearch, keyValueToMatch) {
     return objectToSearch.filter(function (objectEntry) {
       return Object.keys(keyValueToMatch).every(function (key) {
@@ -81,7 +90,10 @@ const App = () => {
       />
       <h2>Numbers</h2>
       <DisplayPeople
-        newSearch={newSearch} people={persons} showFiltered={showFiltered}
+        newSearch={newSearch}
+        people={persons}
+        showFiltered={showFiltered}
+        deletePerson={deletePpl}
       />
     </div>
   )
