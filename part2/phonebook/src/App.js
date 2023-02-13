@@ -1,4 +1,4 @@
-import axios from 'axios'
+//import axios from 'axios'
 import { useState, useEffect } from 'react'
 
 import DisplayPeople from './components/DisplayPeople'
@@ -23,18 +23,33 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
+    const personObject = {
+      name: newName,
+      number: newNumber
+    }
     const namesArray = []
     persons.map(person => {
       namesArray.push(person.name)
     })
     if (namesArray.includes(`${newName}`)) {
-      alert(`"${newName}" has already been added to the phonebook`);
+      //creating findName function to use for .findIndex operator below
+      const findName = (name) => name === newName
+
+      if (window.confirm(`"${newName}" has already been added to the phonebook. 
+      Would you like to update their number?`)) {
+        people
+          .update(persons[namesArray.findIndex(findName)].id, personObject)
+          .then(response => {
+            persons.splice(namesArray.findIndex(findName), 1, response)
+            setPersons(persons)
+          })
+
+        people
+          .getAll()
+          .then(response => setPersons(response))
+      };
     }
     else {
-      const personObject = {
-        name: newName,
-        number: newNumber
-      }
       people
         .create(personObject)
         .then(response => {
