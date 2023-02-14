@@ -1,0 +1,33 @@
+h1 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.person {
+    color: #222111;
+    padding-top: 3px;
+    font-size: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.displayNone {
+    display: none;
+}
+.success {
+    color: green;
+    background-color: mintcream;
+    border: 1px solid green;
+    padding: 8px;
+    margin: 5px;
+    border-radius: 5px;
+    width: 25%;
+}
+
+.error {
+    color: maroon;
+    background-color: pink;
+    border: 1px solid red;
+    padding: 8px;
+    margin: 5px;
+    border-radius: 5px;
+    width: 25%;
+}
