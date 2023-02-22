@@ -9,16 +9,7 @@ import CountryInfo from './components/CountryInfo';
 const App = () => {
   const [searchValue, setSearchValue] = useState('')
   const [countriesList, setCountriesList] = useState([])
-  const [countryInfo, setCountryInfo] = useState(
-    {
-      Name: "",
-      Region: "",
-      Capital: "",
-      Area: 0,
-      Population: 0,
-      Languages: [""],
-      FlagPNG: ""
-    }
+  const [countryInfo, setCountryInfo] = useState(null
   )
 
   //TODO
@@ -44,11 +35,6 @@ const App = () => {
       })
     });
   }
-
-  //Playground
-  const arr = ["apple", "banana", "peacha", "plumb", "belgium", "gum", "nana", "gloat", "goat"];
-
-  //END playground
 
   function formatNumber(number) {
     const numberFormat = Intl.NumberFormat();
@@ -109,14 +95,46 @@ const App = () => {
             :
             <ul>
               {countriesList.map((country) => {
-                return (<li key={country}>{country}</li>)
+                return (
+                  <li
+                  key={country}>{country}
+                  &nbsp;
+                  {country !== "No countries match your search" && country !== "List of results is too long"?
+                    <button type="click"
+                    onClick={() => {
+                      console.log("COUNTRY", country)
+                        countriesApi
+                            .getCountryInfo(country)
+                            .then(response => {
+                                setCountryInfo({
+                                    Name: response.Name,
+                                    Region: response.Region,
+                                    Capital: response.Capital,
+                                    Borders: response.Borders,
+                                    Area: formatNumber(response.Area),
+                                    Population: formatNumber(response.Population),
+                                    Languages: response.Languages,
+                                    FlagPNG: response.FlagPNG
+                                })
+                            })
+                            .catch(error => {
+                              alert(`The API has failed to fetch information for this country.
+                              \r\nTry search: https://restcountries.com/v2/name/${country}`)
+                              console.log(`there was an error: ${error}`)})
+                    }}
+                >Show</button>
+                : <p></p>
+                  }
+                  
+              </li>
+                )
               })}
             </ul>
         }
       </div>
       <div>
         {
-          countriesList.length === 1 && countriesList[0] !== "List of results is too long" && countriesList[0] !== "No countries match your search" ?
+          countryInfo ?
             <CountryInfo name={countryInfo.Name}
               region={countryInfo.Region}
               capital={countryInfo.Capital}
